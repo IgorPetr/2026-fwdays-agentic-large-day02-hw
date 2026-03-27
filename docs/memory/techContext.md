@@ -85,6 +85,11 @@ TypeScript path aliases in `tsconfig.json` and `vitest.config.mts` map `@excalid
 | `yarn release:latest` | Publish as `latest` |
 | `yarn locales-coverage` | Compute translation coverage |
 
+## Agent Workspace Guidance
+
+- `.cursor/rules/do-not-touch.mdc` and `.cursor/rules/memory-bank.mdc` are always-on workspace rules for Excalidraw-specific protected paths, workspace boundaries, and Memory Bank synchronization.
+- `.cursor/skills/build-verify/SKILL.md`, `.cursor/skills/codebase-explorer/SKILL.md`, and `.cursor/skills/memory-bank-update/SKILL.md` provide Excalidraw-aware workflows for choosing build commands, tracing package boundaries and renderer/collab entry points, and routing durable updates into `docs/memory/`.
+
 ## Environment Variables (App)
 
 | Variable | Purpose |
@@ -139,6 +144,7 @@ TypeScript path aliases in `tsconfig.json` and `vitest.config.mts` map `@excalid
 - `packages/*/package.json` — sub-package dependencies
 - `tsconfig.json` — compiler options, path aliases
 - `vitest.config.mts` — test config, resolve aliases, coverage
+- `.cursor/rules/*.mdc`, `.cursor/skills/*/SKILL.md` — agent workspace guardrails and Excalidraw-specific tooling workflows
 - `excalidraw-app/vite.config.mts` — Vite plugins, Rollup chunks, PWA config, envDir
 - `Dockerfile` — multi-stage build process
 - `vercel.json` — deployment settings, headers, redirects

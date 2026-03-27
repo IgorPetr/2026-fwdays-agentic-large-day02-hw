@@ -11,8 +11,13 @@ The Memory Bank lives in `docs/memory/`. The index is `docs/memory-bank.md` (rea
 
 ## Rule
 
-- Before broad, ambiguous, or architecture-affecting work, read the relevant files in `docs/memory/` per `docs/memory-bank.md`.
-- When durable project facts or status change, update the affected Memory Bank files in the same task by reading and following `.cursor/skills/memory-bank-update/SKILL.md`.
+- Before broad, ambiguous, or architecture-affecting work, read the relevant files in `docs/memory/` by using `docs/memory-bank.md` as the index and file guide.
+- When durable project facts or status change, update the affected Memory Bank files in the same task by following `.cursor/skills/memory-bank-update/SKILL.md`.
+- Treat Excalidraw-specific durable facts as Memory Bank material: element architecture and type hierarchy, canvas rendering flow and public canvas APIs, collaboration transport boundaries, encryption behavior, package responsibilities, and user-visible workflow changes.
+- Examples:
+  - Element type hierarchy changes in `packages/element/src/types.ts`, `packages/element/src/newElement.ts`, or `packages/element/src/mutateElement.ts` -> update `docs/memory/systemPatterns.md`.
+  - New collaboration protocol or encryption changes in `excalidraw-app/collab/`, `excalidraw-app/data/firebase.ts`, or `packages/excalidraw/data/encryption.ts` -> update `docs/memory/techContext.md` and `docs/memory/decisionLog.md`.
+  - Canvas API or rendering changes in `packages/excalidraw/index.tsx`, `packages/excalidraw/components/App.tsx`, or `packages/excalidraw/renderer/` -> update `docs/memory/progress.md`, and update `docs/memory/productContext.md` when the behavior changed for users.
 
 ## How to verify
 

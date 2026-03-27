@@ -32,9 +32,9 @@ It’ll preserve the existing `packages/excalidraw` architecture by keeping all 
 ## Result B (rule OFF)
 
 ```text
-I’ll add a dedicated coordinates component under `packages/excalidraw/components/Stats/`, wire it into `packages/excalidraw/components/Stats/index.tsx`, and follow the existing `Position`, `MultiPosition`, and `DragInput` patterns so it works consistently for single and multi-selection.
+Agent’ll add a dedicated coordinates component under `packages/excalidraw/components/Stats/`, wire it into `packages/excalidraw/components/Stats/index.tsx`, and follow the existing `Position`, `MultiPosition`, and `DragInput` patterns so it works consistently for single and multi-selection.
 
-I’ll keep the current rotated/cropped position behavior intact and update the closest tests if the stats UI behavior changes.
+Agent’ll keep the current rotated/cropped position behavior intact and update the closest tests if the stats UI behavior changes.
 ```
 
 ## Key Differences

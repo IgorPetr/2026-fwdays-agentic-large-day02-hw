@@ -26,6 +26,7 @@
 ### Documentation Workflow
 
 - **Memory Bank maintenance**: `docs/memory-bank.md` defines the repository Memory Bank pattern. `docs/memory/` is the canonical long-lived project context, and `AGENTS.md` now acts as a concise entry point that points back to the Memory Bank instead of duplicating it. Update the affected Memory Bank files in the same task whenever project changes affect scope, behavior, architecture, tooling, decisions, or work status.
+- **Cursor rules and skills**: `.cursor/rules/do-not-touch.mdc`, `.cursor/rules/memory-bank.mdc`, `.cursor/skills/build-verify/SKILL.md`, `.cursor/skills/codebase-explorer/SKILL.md`, and `.cursor/skills/memory-bank-update/SKILL.md` now include Excalidraw-specific workspace boundaries, protected paths, renderer and collaboration entry points, and Memory Bank routing examples for future agent work.
 - **Cursor workspace commands**: `.cursor/commands/review-code.md` and `.cursor/commands/create-component.md` provide reusable slash-command prompts for structured code review and Excalidraw-aligned React component scaffolding.
 
 ---

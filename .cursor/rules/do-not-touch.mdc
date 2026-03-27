@@ -7,13 +7,16 @@ alwaysApply: true
 
 ## Context
 
-This repository includes deployment configuration, committed environment files, generated output paths, and multiple workspaces. Unrelated edits in these areas create noisy diffs, increase review risk, and can introduce regressions far away from the requested change.
+This repository includes deployment configuration, committed environment files, generated output paths, shipped fonts and public assets, snapshot baselines, and multiple workspaces. Unrelated edits in these areas create noisy diffs, increase review risk, and can introduce regressions far away from the requested change. The published editor library lives in `packages/excalidraw/`; the hosted app lives in `excalidraw-app/` (not `packages/excalidraw-app/`).
 
 ## Rule
 
 - Change only files that are directly required for the task.
+- Respect workspace boundaries: keep shared editor and public API changes in `packages/excalidraw/`, and keep app-only collaboration, persistence, sharing, PWA, and monitoring changes in `excalidraw-app/` unless the task is explicitly about changing that boundary.
 - DO NOT hand-edit generated output such as `dist/`, `build/`, coverage folders, or dependency directories like `node_modules`.
-- DO NOT modify deployment, release, or environment files unless the task is explicitly about deployment, release flow, or environment behavior.
+- DO NOT modify shipped asset directories such as `packages/excalidraw/fonts/`, `public/`, or other `assets/` folders unless the task is explicitly about updating those binary or generated assets.
+- DO NOT modify deployment, release, or environment files such as `vercel.json`, example `vercel.json` files, or `excalidraw-app/vite.config.mts` unless the task is explicitly about deployment, release flow, or environment behavior.
+- DO NOT edit `__snapshots__/`, canvas snapshot outputs, or test fixtures such as `packages/excalidraw/tests/fixtures/` unless you are fixing a known regression or intentionally updating approved baselines.
 - Avoid touching unrelated docs, examples, snapshots, or tests just to make the change feel broader than requested.
 - NEVER change tests, snapshots, or validation thresholds only to hide a regression.
 - NEVER add secrets, tokens, private keys, or credentials to tracked files.

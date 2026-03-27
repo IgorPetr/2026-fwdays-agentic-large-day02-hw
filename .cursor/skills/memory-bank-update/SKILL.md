@@ -29,6 +29,15 @@ Canonical layout and file roles: [docs/memory-bank.md](../../../docs/memory-bank
 4. **Verify:** Every technical claim must match current source, `package.json`/workspace config, or other repo artifacts you actually checked.
 5. **Size:** Keep each file **under 200 lines**; if a file would exceed that, compress with bullets and links to code paths instead of long prose.
 
+## Excalidraw change → Memory Bank routing examples
+
+- **Element architecture changes:** changes in `packages/element/src/*`, especially `types.ts`, `newElement.ts`, `mutateElement.ts`, renderers, or frame and arrow logic → update `docs/memory/systemPatterns.md`; also update `docs/memory/progress.md` if the feature reach or stability changed.
+- **Canvas feature or rendering changes:** changes in `packages/excalidraw/components/App.tsx`, `packages/excalidraw/scene/Renderer.ts`, `packages/excalidraw/renderer/*`, or `packages/excalidraw/index.tsx` → update `docs/memory/progress.md`; also update `docs/memory/productContext.md` when behavior is user-visible and `docs/memory/systemPatterns.md` when the rendering pipeline or state flow changed.
+- **Collaboration, encryption, or security boundary changes:** changes in `excalidraw-app/collab/*`, `excalidraw-app/data/firebase.ts`, `packages/excalidraw/data/encryption.ts`, or `packages/excalidraw/data/reconcile.ts` → update `docs/memory/techContext.md`; add `docs/memory/decisionLog.md` when the protocol, trust boundary, or transport decision changed.
+- **Collaboration protocol or hotspot changes:** if the work changes active collaboration workflows, operational guidance, or current hot areas without creating a durable new architectural decision, update `docs/memory/activeContext.md`.
+- **Tooling and workspace workflow changes:** changes under `.cursor/`, workspace build scripts, or package boundaries → update `docs/memory/progress.md` and `docs/memory/techContext.md` only when the durable facts changed.
+- **Trigger rule:** capture each durable fact once in the smallest correct set of Memory Bank files; do not copy the same note into `progress.md`, `systemPatterns.md`, and `techContext.md` unless each file needs a distinct fact.
+
 ## Outputs
 
 1. **Updated files:** List paths under `docs/memory/` that changed.
