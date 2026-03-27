@@ -2,7 +2,7 @@
 
 ## Related Docs
 
-- [Architectural Decisions — Full Detail](../technical/decisions.md) — complete rationale, tradeoffs, and source evidence for Decisions 1–8
+- [Architectural Decisions — Full Detail](../technical/decisions.md) — complete rationale, tradeoffs, and source evidence for Decisions 1–9
 - [Undocumented Behaviors — Full Detail](../technical/undocumented-behaviors.md) — complete analysis for Undocumented Behaviors 1–10
 - [Technical Architecture](../technical/architecture.md) — implementation details (data flow, state management, rendering pipeline, collaboration)
 - [Product Requirements (PRD)](../product/PRD.md) — product-level context for collaboration (§5.7), embedding API (§4.4, FR-21–FR-25), security requirements (§7), and open questions (§8)
@@ -72,6 +72,14 @@ A **StaticCanvas** (throttled, committed elements) and an **InteractiveCanvas** 
 Elements carry a `FractionalIndex` string (`index` field) for stable z-order compatible with concurrent multi-user insertions. Index strings can grow with many sequential insertions between the same two elements; periodic reindexing mitigates this.
 
 → [Full detail](../technical/decisions.md#decision-8-fractional-indexing-for-element-order)
+
+---
+
+### Decision 9: Memory Bank as Canonical Agent Context
+
+Long-lived project context lives in `docs/memory/`, with workflow instructions in `docs/memory-bank.md`. After each project change, the affected Memory Bank files should be updated in the same task so future agent sessions inherit current architecture, progress, and workflow state.
+
+→ [Full detail](../technical/decisions.md#decision-9-memory-bank-as-canonical-agent-context)
 
 ---
 

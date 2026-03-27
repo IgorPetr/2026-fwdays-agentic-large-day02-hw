@@ -1,0 +1,27 @@
+---
+description: "When editing the collaboration module in excalidraw-app"
+globs: "excalidraw-app/collab/**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Collaboration Module Rule
+
+## Context
+
+The collaboration layer lives in `excalidraw-app`, not in the published `@excalidraw/excalidraw` package. This module coordinates Socket.IO transport, Firebase persistence, end-to-end encryption, remote reconciliation, and collaboration-specific state such as collaborators, room links, and file sync. Small changes here can break privacy guarantees, undo history, or multi-user consistency.
+
+## Rule
+
+- Keep transport-specific collaboration code inside `excalidraw-app/collab/`; DO NOT move Socket.IO or Firebase behavior into `packages/excalidraw`.
+- Preserve the encrypted-by-default network flow: scene payloads and files must stay encrypted with the room key before leaving the client, and the room key must remain client-only in the URL fragment.
+- Apply remote scene updates as non-history updates with `CaptureUpdateAction.NEVER` or the equivalent remote-update path so collaboration changes do not pollute local undo and redo stacks.
+- Preserve version-based reconciliation and deleted-element retention behavior; NEVER drop deleted elements immediately if the retention window is part of keeping collaborators in sync.
+- Keep collaboration state transitions explicit: starting collaboration should pause local-only persistence where required, and stopping collaboration should clean up socket listeners, timers, and room state.
+- Add or update regression coverage in `excalidraw-app/tests/collab.test.tsx` when changing encryption flow, reconciliation, remote updates, room lifecycle, or collaboration history behavior.
+
+## How to verify
+
+1. Review the changed flow in `excalidraw-app/collab/Portal.tsx` and `excalidraw-app/collab/Collab.tsx` to confirm payloads still encrypt before network transport and decrypt after receipt.
+2. Confirm remote updates still bypass undo history and do not break version-based reconciliation.
+3. Run `yarn test:app --watch=false`.
+4. Review or extend `excalidraw-app/tests/collab.test.tsx` for the changed collaboration behavior.

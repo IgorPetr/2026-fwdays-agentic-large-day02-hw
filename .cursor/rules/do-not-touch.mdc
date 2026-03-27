@@ -1,0 +1,25 @@
+---
+description: "Always-on guardrails for unrelated, generated, or sensitive files"
+alwaysApply: true
+---
+
+# Do Not Touch Rule
+
+## Context
+
+This repository includes deployment configuration, committed environment files, generated output paths, and multiple workspaces. Unrelated edits in these areas create noisy diffs, increase review risk, and can introduce regressions far away from the requested change.
+
+## Rule
+
+- Change only files that are directly required for the task.
+- DO NOT hand-edit generated output such as `dist/`, `build/`, coverage folders, or dependency directories like `node_modules`.
+- DO NOT modify deployment, release, or environment files unless the task is explicitly about deployment, release flow, or environment behavior.
+- Avoid touching unrelated docs, examples, snapshots, or tests just to make the change feel broader than requested.
+- NEVER change tests, snapshots, or validation thresholds only to hide a regression.
+- NEVER add secrets, tokens, private keys, or credentials to tracked files.
+
+## How to verify
+
+1. Review the final diff and confirm every changed file is directly related to the requested task.
+2. Confirm no generated output, dependency folders, or unrelated infrastructure files changed unexpectedly.
+3. If a sensitive or deployment-related file changed on purpose, document why it changed.

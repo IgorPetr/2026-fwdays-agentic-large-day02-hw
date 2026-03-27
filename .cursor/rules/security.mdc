@@ -1,0 +1,27 @@
+---
+description: "When code touches URLs, network boundaries, env vars, iframes, or encryption"
+globs: "**/*.{ts,tsx,js,mjs,cjs,mts,json}"
+alwaysApply: false
+---
+
+# Security Rule
+
+## Context
+
+Excalidraw works with external URLs, Firebase, Socket.IO collaboration, an AI backend, SVG/HTML export, and end-to-end encrypted scene data. The highest-risk areas in this project are links, `window.open`, `fetch`, iframe/embed flows, client-side env variables, and any code that bypasses the existing sanitization or encryption helpers.
+
+## Rule
+
+- Sanitize every user-controlled or persisted URL through `normalizeLink()` or `toValidURL()` from `packages/common/src/url.ts` before rendering, embedding, or opening it in a new window.
+- Use the existing encryption helpers from `packages/excalidraw/data/encryption.ts` for encryption and decryption through `window.crypto.subtle` and AES-GCM. NEVER invent a custom crypto scheme, NEVER log room keys, decrypted payloads, or tokens, and DO NOT send plaintext scene data where an encrypted Firebase or Socket.IO path already exists.
+- Treat `import.meta.env.VITE_APP_*` as public client-side configuration. NEVER commit secrets, private tokens, or credentials to source code or `.env*`; keep local overrides only in uncommitted `.env.local`.
+- Every `window.open()` or `target="_blank"` usage must protect against tabnabbing with `noopener`; add `noreferrer` unless there is a clear reason to preserve the referrer.
+- AVOID `dangerouslySetInnerHTML`, raw `innerHTML`, `eval`, and `new Function`. If a legacy or low-level path makes this unavoidable, reduce the surface area, document the reason, and add regression tests around the input boundary.
+- Check external boundaries explicitly: restrict `postMessage` origin, review `fetch` endpoints, do not inject untrusted HTML or SVG into iframe or export pipelines, and DO NOT weaken security headers or CORS behavior in `vercel.json` without a clear reason and review.
+
+## How to verify
+
+1. Review the changed files for risky APIs: `window.open`, `target="_blank"`, `innerHTML`, `dangerouslySetInnerHTML`, `eval(`, and `new Function(`.
+2. Confirm that new URLs go through `normalizeLink()` or `toValidURL()`, and that collaboration or share payloads stay on the `encryptData()` / `decryptData()` path where required.
+3. Run `yarn test:app --watch=false` and add or update focused regression tests if sanitization or encryption logic changed.
+4. Run `yarn test:code` and `yarn test:typecheck`.

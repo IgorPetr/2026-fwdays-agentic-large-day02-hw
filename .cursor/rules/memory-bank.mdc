@@ -1,0 +1,20 @@
+---
+description: "Always keep the Memory Bank in sync with project changes"
+alwaysApply: true
+---
+
+# Memory Bank Rule
+
+## Context
+
+The Memory Bank lives in `docs/memory/`. The index is `docs/memory-bank.md` (read order and file guide).
+
+## Rule
+
+- Before broad, ambiguous, or architecture-affecting work, read the relevant files in `docs/memory/` per `docs/memory-bank.md`.
+- When durable project facts or status change, update the affected Memory Bank files in the same task by reading and following `.cursor/skills/memory-bank-update/SKILL.md`.
+
+## How to verify
+
+1. Confirm edits follow the skill’s steps, outputs, and safety section.
+2. Confirm only `docs/memory/*.md` files whose facts changed were edited and still match `docs/memory-bank.md`.

@@ -23,6 +23,11 @@
 - **Sharing**: Static `#json=<id>,<key>` share links (encrypted snapshot); room URLs (`#room=<id>,<key>`); QR code generation (lazy chunk).
 - **Docker deployment**: Multi-stage Dockerfile producing a minimal `nginx:1.27-alpine` image, published to DockerHub as multi-arch (`amd64`, `arm64`, `arm/v7`).
 
+### Documentation Workflow
+
+- **Memory Bank maintenance**: `docs/memory-bank.md` defines the repository Memory Bank pattern. `docs/memory/` is the canonical long-lived project context, and `AGENTS.md` now acts as a concise entry point that points back to the Memory Bank instead of duplicating it. Update the affected Memory Bank files in the same task whenever project changes affect scope, behavior, architecture, tooling, decisions, or work status.
+- **Cursor workspace commands**: `.cursor/commands/review-code.md` and `.cursor/commands/create-component.md` provide reusable slash-command prompts for structured code review and Excalidraw-aligned React component scaffolding.
+
 ---
 
 ## Partially Implemented / In Progress

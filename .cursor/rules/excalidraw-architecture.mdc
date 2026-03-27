@@ -1,0 +1,26 @@
+---
+description: "Architecture constraints for the core Excalidraw editor package"
+globs: "packages/excalidraw/**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Excalidraw Architecture Rule
+
+## Context
+
+`packages/excalidraw` is the core editor package. It coordinates editor UI, `AppState`, actions, history, rendering, and integration with lower-level packages such as `common`, `math`, and `element`. Architectural shortcuts here can break performance, public API expectations, or package boundaries across the monorepo.
+
+## Rule
+
+- Keep `packages/excalidraw` focused on editor orchestration and UI; move reusable low-level geometry, element, or utility logic into the lower-level packages when that is the better fit.
+- Preserve the existing editor state architecture built around `AppState`, scene updates, actions, and history; DO NOT introduce Redux, Zustand, MobX, or a parallel global state system for the core editor.
+- Preserve the canvas-based rendering pipeline; DO NOT replace scene rendering with React DOM drawing or libraries such as `react-konva`, `fabric.js`, or `pixi.js`.
+- Respect internal package boundaries and source-level imports; avoid creating new coupling from lower-level packages back into `packages/excalidraw`.
+- Prefer existing internal helpers and packages before adding a new dependency, and DO NOT add new npm packages without a clear need.
+
+## How to verify
+
+1. Review the changed code and confirm state updates still follow the existing editor action, scene, and history flow.
+2. Confirm rendering still goes through the existing canvas and scene pipeline.
+3. Run `yarn test:code` and `yarn test:typecheck`.
+4. If the change affects package boundaries or editor package outputs, run `yarn build:packages`.

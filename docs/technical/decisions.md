@@ -153,6 +153,26 @@ See [PRD §5.7 and §7 Security](../product/PRD.md) for the product-level securi
 
 ---
 
+## Decision 9: Memory Bank as Canonical Agent Context
+
+**Decision**: Keep long-lived agent context in `docs/memory/`, document the workflow in `docs/memory-bank.md`, and update the affected Memory Bank files in the same task whenever project facts change.
+
+**Rationale**:
+
+- Reduces repeated repository re-discovery across separate agent sessions.
+- Keeps durable context out of ad-hoc prompts and avoids overloading `AGENTS.md` with fast-changing details.
+- Scopes updates to the Memory Bank files whose facts changed, which keeps maintenance targeted.
+
+**Tradeoffs**:
+
+- (-) Adds a small documentation-maintenance step to each project change.
+- (+) Improves continuity for future work by keeping architecture, progress, and active-context notes current.
+- (+) Makes project context easier to audit because the canonical location is explicit.
+
+**Source**: `docs/memory-bank.md`, `.cursor/rules/memory-bank.mdc`, `docs/memory/progress.md`.
+
+---
+
 ## Source Evidence
 
 - `package.json` (root) — workspace structure, build order scripts
@@ -166,3 +186,5 @@ See [PRD §5.7 and §7 Security](../product/PRD.md) for the product-level securi
 - `packages/excalidraw/renderer/staticScene.ts`, `interactiveScene.ts`
 - `packages/*/package.json` — version numbers, dependencies
 - `packages/math/src/types.ts` — branded coordinate type definitions
+- `docs/memory-bank.md` — Memory Bank workflow, read order, update rules
+- `.cursor/rules/memory-bank.mdc` — always-on instruction to keep Memory Bank in sync

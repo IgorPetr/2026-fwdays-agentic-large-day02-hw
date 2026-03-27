@@ -1,0 +1,27 @@
+---
+description: "When editor behavior, state, rendering, or tests change"
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Testing Rule
+
+## Context
+
+This monorepo uses `yarn@1`, `Vitest 3`, `jsdom`, `@testing-library/react`, `vitest-canvas-mock`, `fake-indexeddb/auto`, and shared setup in `setupTests.ts`. The project has many canvas, pointer, localStorage, and export flows, so even small logic changes can break behavior without causing an obvious build failure.
+
+## Rule
+
+- For every behavior change in `packages/*` or `excalidraw-app`, add or update a test in the closest existing suite, usually in `packages/excalidraw/tests/` or `packages/common/tests/`.
+- Prefer testing observable behavior through `@testing-library/react` and the existing helpers (`render`, `UI`, `Pointer`, `waitFor`) instead of asserting private implementation details.
+- Isolate mutable state between tests: clear `localStorage` / `sessionStorage`, reset mocks, DOM globals, timers, and canvas-related state whenever a test changes them.
+- Reuse the existing test setup and polyfills from `setupTests.ts` and `packages/excalidraw/tests/test-utils.ts`; AVOID duplicating custom bootstrap code for jsdom, canvas, fonts, or IndexedDB.
+- For changes in sanitization, encryption, export, restore, persistence, or collaboration, add regression tests near the affected modules, for example `packages/common/tests/url.test.tsx` or `packages/excalidraw/tests/data/*`.
+- Tests must stay deterministic: AVOID real servers, unstable timeouts, and implicit async race conditions; NEVER leave `.only`; DO NOT lower the `60/70/63/60` coverage thresholds in `vitest.config.mts` just to make a change pass.
+
+## How to verify
+
+1. Run `yarn test:app --watch=false`.
+2. Run `yarn test:typecheck` and `yarn test:code`.
+3. If the change affects multiple packages or rendering behavior, run `yarn test:all`.
+4. If snapshots changed, review the diff and confirm that the output change is intentional.

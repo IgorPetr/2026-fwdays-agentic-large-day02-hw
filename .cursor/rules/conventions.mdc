@@ -1,0 +1,25 @@
+---
+description: "Always-on coding conventions for the Yarn workspace monorepo"
+alwaysApply: true
+---
+
+# Conventions Rule
+
+## Context
+
+This project is a Yarn 1 workspace monorepo with strict TypeScript, shared internal packages, source-path aliases, and repository-specific ESLint rules. Following the local conventions keeps changes consistent across `excalidraw-app` and `packages/*` and reduces avoidable lint, type, and boundary issues.
+
+## Rule
+
+- Use the existing Yarn-based workflow and repository scripts; do not switch instructions or expectations to npm, pnpm, or another package manager.
+- Respect the package dependency direction `common <- math <- element <- excalidraw <- excalidraw-app` and avoid creating circular or backward dependencies.
+- Use `import type` for type-only imports where applicable, matching the repository ESLint configuration.
+- In `packages/excalidraw`, DO NOT import from the `@excalidraw/excalidraw` barrel or local `index` barrels when a direct relative import is required.
+- DO NOT import from `jotai` directly where the repository expects app-specific modules such as `editor-jotai` or `app-jotai`.
+- Prefer existing helpers, utilities, and repository patterns before adding new abstractions or dependencies.
+
+## How to verify
+
+1. Run `yarn test:code`.
+2. Run `yarn test:typecheck`.
+3. Review changed imports and confirm they follow local package boundaries and lint expectations.
