@@ -46,7 +46,7 @@ packages/excalidraw/components/App.tsx:125:2:
 - If `mutateElement` should be public, export it from `packages/element/src/index.ts`; otherwise switch the import to the correct existing boundary used in that workspace.
 - Re-run `yarn build:packages`.
 
-2. Element type mismatch
+1. Element type mismatch
 
 ```text
 packages/excalidraw/renderer/staticScene.ts:312:17 - error TS2345:
@@ -58,7 +58,7 @@ Argument of type 'ExcalidrawElement' is not assignable to parameter of type 'Non
 - Open the relevant source type or guard in `packages/element/src/types.ts`, `packages/element/src/typeChecks.ts`, `packages/element/src/newElement.ts`, or `packages/element/src/mutateElement.ts`.
 - Fix the narrowing or upstream type definition; do not add `as any`.
 
-3. Upward import or cycle risk
+1. Upward import or cycle risk
 
 ```text
 ✘ [ERROR] Could not resolve "@excalidraw/excalidraw/types"
